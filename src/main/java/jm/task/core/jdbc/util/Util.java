@@ -11,16 +11,18 @@ public class Util {
     private static final String DB_PASSWORD = "root";
 
     public static Connection getConnection() {
+        Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection connection = DriverManager.getConnection(DB_URL,
-                    DB_USERNAME, DB_PASSWORD)) {
-                return connection;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            connection = DriverManager.getConnection(DB_URL,
+                    DB_USERNAME, DB_PASSWORD);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return connection;
     }
 }
