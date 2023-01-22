@@ -25,9 +25,10 @@ public class Util {
     private static final String HBM2DDL_AUTO = "create-drop";
 
     private static SessionFactory sessionFactory;
+    private static Connection connection;
     // JDBC
     public static Connection getConnection() {
-        Connection connection = null;
+        connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -40,6 +41,16 @@ public class Util {
             throw new RuntimeException(e);
         }
         return connection;
+    }
+
+    public static void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // Hibernate
@@ -81,5 +92,7 @@ public class Util {
             }
         }
     }
+
+
 
 }

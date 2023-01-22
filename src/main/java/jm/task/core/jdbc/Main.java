@@ -18,8 +18,7 @@ public class Main {
         userDao.getAllUsers();
         userDao.cleanUsersTable();
         userDao.dropUsersTable();
-
-
-
+        Util.closeSessionFactory();
+        Util.closeConnection();
     }
 }
