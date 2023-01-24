@@ -15,11 +15,10 @@ public class Util {
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
 
-    private static final String DIALECT = "org.hibernate.dialect.MySQL5Dialect";
+    private static final String DIALECT = "org.hibernate.dialect.MySQLDialect";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String SHOW_SQL = "true";
     private static final String CURRENT_SESSION_CONTEXT_CLASS = "thread";
-    private static final String HBM2DDL_AUTO = "create-drop";
 
     private static SessionFactory sessionFactory;
     private static Connection connection;
@@ -64,7 +63,6 @@ public class Util {
                 settings.put(Environment.DIALECT, DIALECT);
                 settings.put(Environment.SHOW_SQL, SHOW_SQL);
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, CURRENT_SESSION_CONTEXT_CLASS);
-                settings.put(Environment.HBM2DDL_AUTO, HBM2DDL_AUTO);
 
                 sessionFactory = configuration.setProperties(settings)
                         .addAnnotatedClass(jm.task.core.jdbc.model.User.class)
