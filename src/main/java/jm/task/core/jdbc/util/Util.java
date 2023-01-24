@@ -5,12 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import jm.task.core.jdbc.model.User;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.service.ServiceRegistry;
 
 public class Util {
     // реализуйте настройку соеденения с БД
@@ -26,6 +23,7 @@ public class Util {
 
     private static SessionFactory sessionFactory;
     private static Connection connection;
+
     // JDBC
     public static Connection getConnection() {
         connection = null;
@@ -68,14 +66,10 @@ public class Util {
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, CURRENT_SESSION_CONTEXT_CLASS);
                 settings.put(Environment.HBM2DDL_AUTO, HBM2DDL_AUTO);
 
-                configuration.setProperties(settings);
+                sessionFactory = configuration.setProperties(settings)
+                        .addAnnotatedClass(jm.task.core.jdbc.model.User.class)
+                        .buildSessionFactory();
 
-                configuration.addAnnotatedClass(User.class);
-
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .applySettings(configuration.getProperties()).build();
-
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -92,7 +86,6 @@ public class Util {
             }
         }
     }
-
 
 
 }
